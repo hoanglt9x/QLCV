@@ -79,5 +79,13 @@
   "main": ".eslintrc.js",
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "npm install\r # Chạy debug\r npm run serve\r # Build\r npm run build",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoanglt9x/QLCV.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hoanglt9x/QLCV/issues"
+  },
+  "homepage": "https://github.com/hoanglt9x/QLCV#readme"
 }

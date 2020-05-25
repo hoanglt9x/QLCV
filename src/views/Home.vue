@@ -7,7 +7,7 @@
             <vs-table pagination max-items="8" search :data="dispatchedOrders" class="table-dark-inverted">
               <template slot="thead">
                 <vs-th>STT</vs-th>
-                <vs-th>TRẠNG THÁI</vs-th>
+                <vs-th sort-key="status">TRẠNG THÁI</vs-th>
                 <vs-th>PHỤ TRÁCH</vs-th>
                 <vs-th>NỘI DUNG</vs-th>
                 <vs-th>MỨC ĐỘ HOÀN THÀNH</vs-th>
