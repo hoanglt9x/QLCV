@@ -38,6 +38,11 @@ const router = new Router({
           path: "/nvct",
           name: "nvct",
           component: () => import("./views/nvct.vue")
+        },
+        {
+          path: "/tonghop",
+          name: "tonghop",
+          component: () => import("./views/tonghop.vue")
         }
       ]
     },

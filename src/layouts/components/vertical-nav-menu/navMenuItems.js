@@ -21,4 +21,10 @@ export default [
     slug: "nhiem-vu-chinh-tri",
     icon: "FileIcon",
   },
+  {
+    url: "/tonghop",
+    name: "Biểu đồ tổng hợp",
+    slug: "bieu-do-tong-hop",
+    icon: "PieChartIcon",
+  },
 ]

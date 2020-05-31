@@ -15,8 +15,12 @@ import App from './App.vue'
 import Vuesax from 'vuesax'
 import 'material-icons/iconfont/material-icons.css' //Material Icons
 import 'vuesax/dist/vuesax.css'; // Vuesax
+import VueApollo from "vue-apollo";
+import apolloClient from "./vue-apollo";
+import VueLodash from 'vue-lodash'
+import lodash from 'lodash'
 Vue.use(Vuesax)
-
+Vue.use(VueLodash, { name: 'custom' , lodash: lodash })
 
 // axios
 import axios from "./axios.js"
@@ -72,9 +76,16 @@ require('./assets/css/iconfont.css')
 
 
 Vue.config.productionTip = false
+Vue.use(VueApollo);
+
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient
+});
+
 
 new Vue({
     router,
     store,
+    apolloProvider,
     render: h => h(App)
 }).$mount('#app')
