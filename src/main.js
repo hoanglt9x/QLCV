@@ -22,7 +22,7 @@ import lodash from 'lodash'
 Vue.use(Vuesax)
 Vue.use(VueLodash, { name: 'custom' , lodash: lodash })
 
-// axios
+axios
 import axios from "./axios.js"
 Vue.prototype.$http = axios
 

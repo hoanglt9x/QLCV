@@ -13,10 +13,10 @@
               class="table-dark-inverted"
             >
               <template slot="thead">
-                <vs-th>STT</vs-th>
-                <vs-th sort-key="organize">PHỤ TRÁCH</vs-th>
-                <vs-th sort-key="trangThai">TRẠNG THÁI</vs-th>
-                <vs-th style="width:250px;">NỘI DUNG</vs-th>
+                <vs-th style="width:174px">STT</vs-th>
+                <vs-th sort-key="organize" style="width:174px">PHỤ TRÁCH</vs-th>
+                <vs-th sort-key="trangThai" style="width:116px">TRẠNG THÁI</vs-th>
+                <vs-th style="width:300px;">NỘI DUNG</vs-th>
                 <vs-th sort-key="trangThai">HOÀN THÀNH</vs-th>
                 <vs-th sort-key="batdau">BẮT ĐẦU</vs-th>
                 <vs-th sort-key="ketthuc">KẾT THÚC</vs-th>
