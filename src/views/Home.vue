@@ -2,24 +2,27 @@
   <div>
     <div class="vx-row">
       <div class="vx-col w-full">
-        <vx-card title="DANH SÁCH NHIỆM VỤ KỸ THUẬT">
+        <vx-card title="DANH SÁCH NHIỆM VỤ KẾ HOẠCH">
           <div slot="no-body" class="mt-4">
             <vs-table
               pagination
               max-items="8"
               search
-              :data="cacnhiemvu"
+              :data="cacnhiemvu.sort(fieldSorter(['trangThai','organize']))"
               stripe
               class="table-dark-inverted"
             >
               <template slot="thead">
-                <vs-th style="width:174px">STT</vs-th>
-                <vs-th sort-key="organize" style="width:174px">PHỤ TRÁCH</vs-th>
-                <vs-th sort-key="trangThai" style="width:116px">TRẠNG THÁI</vs-th>
-                <vs-th style="width:300px;">NỘI DUNG</vs-th>
-                <vs-th sort-key="trangThai">HOÀN THÀNH</vs-th>
+                <vs-th>STT</vs-th>
+                <!-- <vs-th sort-key="project" style="width:240px">DỰ ÁN</vs-th> -->
+                <vs-th style="width:420px">NỘI DUNG</vs-th>
+                <vs-th sort-key="organize">THỰC HIỆN</vs-th>
+                <vs-th sort-key="trangThai">TRẠNG THÁI</vs-th>
+                <!-- <vs-th sort-key="trangThai">HOÀN THÀNH</vs-th> -->
                 <vs-th sort-key="batdau">BẮT ĐẦU</vs-th>
                 <vs-th sort-key="ketthuc">KẾT THÚC</vs-th>
+                <vs-th sort-key="conLai">CÒN LẠI</vs-th>
+                <vs-th>GHI CHÚ</vs-th>
               </template>
 
               <template slot-scope="{data}">
@@ -27,27 +30,49 @@
                   <vs-td :data="indextr">
                     <span>{{ indextr + 1 }}</span>
                   </vs-td>
-                  <vs-td :data="tr.organize">
-                    <span>{{ tr.organize }}</span>
-                  </vs-td>
-                <vs-td :data="loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))">
-                <vs-chip :color="tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)" class="product-order-status">{{ loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)) }}</vs-chip>
-              </vs-td>
-                  <!-- <vs-td :data="loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))">
-                    <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2" :class="'bg-' + tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)"></div>{{loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))}}</span>
+
+                  <!-- <vs-td :data="tr.project">
+                    <span>{{ tr.project }}</span>
                   </vs-td> -->
+
                   <vs-td :data="tr.noidung">
                     <span>{{ tr.noidung }}</span>
                   </vs-td>
-                   <vs-td :data="tr.KhoiLuongHoanThanh">
+
+                  <vs-td :data="tr.organize">
+                    <span>{{ tr.organize }}</span>
+                  </vs-td>
+
+                  <vs-td :data="loaiTrangThai(tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh))">
+                    <vs-chip :color="tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh)" class="product-order-status">{{ loaiTrangThai(tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh)) }}</vs-chip>
+                  </vs-td>
+         
+                  <!-- <vs-td :data="loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))">
+                    <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2" :class="'bg-' + tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)"></div>{{loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))}}</span>
+                  </vs-td> -->
+                  <!-- <vs-td :data="tr.KhoiLuongHoanThanh">
                     <span>{{mucDoHoanThanh(tr.KhoiLuongHoanThanh,tr.KhoiLuong).toPrecision(4) + '%'}}</span>
                     <vs-progress :percent="mucDoHoanThanh(tr.KhoiLuongHoanThanh,tr.KhoiLuong)" :color="tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)"></vs-progress>
-                  </vs-td>
+                  </vs-td> -->
+
                    <vs-td :data="tr.batdau">
-                    <span>{{ tr.batdau }}</span>
+                    <span>{{ GetFormattedDate(tr.batdau) }}</span>
                   </vs-td>
+
                    <vs-td :data="tr.ketthuc">
-                    <span>{{ tr.ketthuc }}</span>
+                    <span>{{ GetFormattedDate(tr.ketthuc) }}</span>
+                  </vs-td>
+
+                  <!-- <vs-td :data="tr.conLai">
+                    <span>{{ tr.conLai + ' ngày'}}</span>
+                  </vs-td> -->
+
+                  <vs-td :data="loaiTrangThai(tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh))">
+                    <vs-chip :color="tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh)" class="date-status">{{tr.conLai + ' ngày'}}</vs-chip>
+                  </vs-td>
+
+                  <vs-td :data="tr.ghiChu">
+                    <span>{{ tr.ghiChu }}</span>
                   </vs-td>
                   <!-- <vs-td :data="data[indextr].status">
                     <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2" :class="'bg-' + data[indextr].statusColor"></div>{{data[indextr].status}}</span>
@@ -94,22 +119,28 @@ export default {
       nhiemvus: []
     };
   },
+  created () {
+     this.$store.commit('UPDATE_HIEN_THI',true)
+     this.$store.commit('UPDATE_THONG_KE',this.laySoLieu2())
+  },
   apollo: {
     nhiemvus: gql`
       query NhiemVus {
-        nhiemvus {
+        nhiemvus(where: {Display: true}) {
           id
-          project {
-            name
-          }
+          # project {
+          #   name
+          # }
           organize {
             name
           }
           noidung
           batdau
           ketthuc
-          KhoiLuongHoanThanh
-          KhoiLuong
+          # KhoiLuongHoanThanh
+          # KhoiLuong
+          ghiChu
+          daHoanThanh
         }
       }
     `
@@ -120,21 +151,76 @@ export default {
        this.nhiemvus.forEach(element => {
           let doiTuong = {
           id: element.id,
-          // project: element.project.name,
-          organize: element.organize.name,
+          // project: (element.project.name ? element.project.name : ''),
+          organize: (element.organize.name ?  element.organize.name : ''),
           noidung: element.noidung,
           batdau: element.batdau,
           ketthuc:element.ketthuc,
-          KhoiLuong: element.KhoiLuong,
-          KhoiLuongHoanThanh: element.KhoiLuongHoanThanh,
-          trangThai: this.loaiTrangThai(this.tinhTrangThai(element.batdau,element.ketthuc,element.KhoiLuongHoanThanh,element.KhoiLuong))
+          // KhoiLuong: element.KhoiLuong,
+          // KhoiLuongHoanThanh: element.KhoiLuongHoanThanh,
+          trangThai: this.loaiTrangThai(this.tinhTrangThai2(element.batdau,element.ketthuc,element.daHoanThanh)),
+          conLai: this.tinhHienTai(element.ketthuc),
+          ghiChu: element.ghiChu,
+          daHoanThanh: element.daHoanThanh
          }
          kq.push(doiTuong)
        })
       return kq
+    },
+    tongHop() {
+      return this.laySoLieu2()
     }
   },
   methods: {
+    fieldSorter(fields) {
+    return function (a, b) {
+        return fields
+            .map(function (o) {
+                var dir = 1;
+                if (o[0] === '-') {
+                   dir = -1;
+                   o=o.substring(1);
+                }
+                if (a[o] > b[o]) return dir;
+                if (a[o] < b[o]) return -(dir);
+                return 0;
+            })
+            .reduce(function firstNonZeroValue (p,n) {
+                return p ? p : n;
+            }, 0);
+    };
+},
+laySoLieu2(){
+      let KQ=[]
+      let quahan = this.cacnhiemvu.filter(function(giatri){
+         return giatri.trangThai=== '1. Quá hạn';
+      }).length
+      KQ.push(quahan)
+      //this.pieChart.chartOptions.legend.labels[0]="Quá hạn: "+ quahan
+       let canhbao = this.cacnhiemvu.filter(function(giatri){
+         return giatri.trangThai === '2. Cảnh báo';
+      }).length
+      KQ.push(canhbao)
+      //this.pieChart.chartOptions.labels[1]="Cảnh báo: "+ canhbao
+       let dangthuchien = this.cacnhiemvu.filter(function(giatri){
+         return giatri.trangThai === '3. Đang xử lý';
+      }).length
+      KQ.push(dangthuchien)
+      //this.pieChart.chartOptions.labels[2]="Đang thực hiện: "+ dangthuchien
+       let hoanthanh = this.cacnhiemvu.filter(function(giatri){
+         return giatri.trangThai === '4. Hoàn thành';
+      }).length
+      KQ.push(hoanthanh)
+      //this.pieChart.chartOptions.labels[3]="Hoàn thành: "+ hoanthanh
+      return KQ
+  },
+GetFormattedDate(todayTime) {
+      const thoigian = new Date(todayTime)
+      const month = thoigian.getMonth() + 1
+      const day = thoigian.getDate()
+      const year = thoigian.getFullYear()
+      return day + '/' + month + '/' + year
+    },
     mucDoHoanThanh(klht,kl){
        return (klht * 100 /kl)
      },
@@ -163,11 +249,24 @@ export default {
        }
        else return 'success'
      },
+     tinhTrangThai2(ngayBatDau,ngayKetThuc, dahoanthanh){
+        if(dahoanthanh===false || dahoanthanh===null){
+        let Tongthoigian = this.tinhThoiGian(ngayBatDau,ngayKetThuc)
+         let hienTai = this.tinhHienTai(ngayKetThuc)
+         if(hienTai > 0){
+              let soThoiGianDaDung = hienTai/Tongthoigian
+              if(soThoiGianDaDung > 0.3) return 'primary'
+              else return 'warning'
+         }
+        else return 'danger'
+        }
+        else return 'success'
+     },
      loaiTrangThai(value){
-       if(value==='success') return 'Đã hoàn thành'
-       if(value==='warning') return 'Cảnh báo'
-       if(value==='primary') return 'Đang thực hiện'
-       if(value==='danger') return 'Quá hạn'
+       if(value==='success') return '4. Hoàn thành'
+       if(value==='warning') return '2. Cảnh báo'
+       if(value==='primary') return '3. Đang xử lý'
+       if(value==='danger') return '1. Quá hạn'
      },
      dynamicSort(property) {
     var sortOrder = 1;
@@ -226,5 +325,10 @@ th {
 }
 .product-order-status{
   width: 115px;
+  font-weight: 700;
+}
+.date-status{
+  width: 100px;
+  font-weight: 700;
 }
 </style>

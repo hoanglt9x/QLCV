@@ -1,26 +1,80 @@
 <template>
-<div>
-	<div class="vx-row">
+  <div>
+    <div class="vx-row">
       <div class="vx-col w-full">
-        <vx-card title="DANH SÁCH NHIỆM VỤ KỸ THUẬT">
+        <vx-card title="DANH SÁCH NHIỆM VỤ CHÍNH TRỊ">
           <div slot="no-body" class="mt-4">
-            <vs-table pagination max-items="8" search :data="dispatchedOrders" class="table-dark-inverted">
+            <vs-table
+              pagination
+              max-items="8"
+              search
+              :data="cacnhiemvu"
+              stripe
+              class="table-dark-inverted"
+            >
               <template slot="thead">
-                <vs-th>STT</vs-th>
-                <vs-th>TRẠNG THÁI</vs-th>
-                <vs-th>PHỤ TRÁCH</vs-th>
-                <vs-th>NỘI DUNG</vs-th>
-                <vs-th>MỨC ĐỘ HOÀN THÀNH</vs-th>
-                <vs-th>NGÀY BẮT ĐẦU</vs-th>
-                <vs-th>NGÀY KẾT THÚC</vs-th>
+                <vs-th>CV</vs-th>
+                <vs-th sort-key="project" style="width:240px">BAN HÀNH</vs-th>
+                <vs-th style="width:240px">NỘI DUNG</vs-th>
+                <vs-th sort-key="organize">THỰC HIỆN</vs-th>
+                <vs-th sort-key="trangThai">TRẠNG THÁI</vs-th>
+                <!-- <vs-th sort-key="trangThai">HOÀN THÀNH</vs-th> -->
+                <vs-th sort-key="batdau">BẮT ĐẦU</vs-th>
+                <vs-th sort-key="ketthuc">KẾT THÚC</vs-th>
+                <vs-th sort-key="conLai">CÒN LẠI</vs-th>
+                <vs-th>GHI CHÚ</vs-th>
               </template>
 
               <template slot-scope="{data}">
                 <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                  <vs-td :data="data[indextr].orderNo">
-                    <span>#{{data[indextr].orderNo}}</span>
+                  <vs-td :data="indextr">
+                    <span>{{ indextr + 1 }}</span>
                   </vs-td>
-                  <vs-td :data="data[indextr].status">
+
+                  <vs-td :data="tr.project">
+                    <span>{{ tr.project }}</span>
+                  </vs-td>
+
+                  <vs-td :data="tr.noidung">
+                    <span>{{ tr.noidung }}</span>
+                  </vs-td>
+
+                  <vs-td :data="tr.organize">
+                    <span>{{ tr.organize }}</span>
+                  </vs-td>
+
+                  <vs-td :data="loaiTrangThai(tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh))">
+                    <vs-chip :color="tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh)" class="product-order-status">{{ loaiTrangThai(tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh)) }}</vs-chip>
+                  </vs-td>
+         
+                  <!-- <vs-td :data="loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))">
+                    <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2" :class="'bg-' + tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)"></div>{{loaiTrangThai(tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong))}}</span>
+                  </vs-td> -->
+                  <!-- <vs-td :data="tr.KhoiLuongHoanThanh">
+                    <span>{{mucDoHoanThanh(tr.KhoiLuongHoanThanh,tr.KhoiLuong).toPrecision(4) + '%'}}</span>
+                    <vs-progress :percent="mucDoHoanThanh(tr.KhoiLuongHoanThanh,tr.KhoiLuong)" :color="tinhTrangThai(tr.batdau,tr.ketthuc,tr.KhoiLuongHoanThanh,tr.KhoiLuong)"></vs-progress>
+                  </vs-td> -->
+
+                   <vs-td :data="tr.batdau">
+                    <span>{{ tr.batdau }}</span>
+                  </vs-td>
+
+                   <vs-td :data="tr.ketthuc">
+                    <span>{{ tr.ketthuc }}</span>
+                  </vs-td>
+
+                  <!-- <vs-td :data="tr.conLai">
+                    <span>{{ tr.conLai + ' ngày'}}</span>
+                  </vs-td> -->
+
+                  <vs-td :data="loaiTrangThai(tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh))">
+                    <vs-chip :color="tinhTrangThai2(tr.batdau,tr.ketthuc,tr.daHoanThanh)" class="date-status">{{tr.conLai + ' ngày'}}</vs-chip>
+                  </vs-td>
+
+                  <vs-td :data="tr.ghiChu">
+                    <span>{{ tr.ghiChu }}</span>
+                  </vs-td>
+                  <!-- <vs-td :data="data[indextr].status">
                     <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2" :class="'bg-' + data[indextr].statusColor"></div>{{data[indextr].status}}</span>
                   </vs-td>
                   <vs-td :data="data[indextr].orderNo">
@@ -44,7 +98,7 @@
                   </vs-td>
                   <vs-td :data="data[indextr].orderNo">
                     <span>{{data[indextr].estDelDate}}</span>
-                  </vs-td>
+                  </vs-td> -->
                 </vs-tr>
               </template>
             </vs-table>
@@ -52,37 +106,173 @@
         </vx-card>
       </div>
     </div>
-	</div>
+    <!-- Ket thuc danh sach -->
+  </div>
 </template>
 
 <script>
-// import VueApexCharts from 'vue-apexcharts'
-// import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
-// import ChangeTimeDurationDropdown from '@/components/ChangeTimeDurationDropdown.vue'
-// import VxTimeline from '@/components/timeline/VxTimeline'
-// import analyticsData from './ui-elements/card/analyticsData.js'
+import gql from "graphql-tag";
 
 export default {
   data() {
     return {
-      dispatchedOrders: []
+      nhiemvus: []
     };
   },
-  components: {
-    // VueApexCharts,
-    // StatisticsCardLine,
-    // ChangeTimeDurationDropdown,
-    // VxTimeline
+  apollo: {
+    nhiemvus: gql`
+      query NhiemVus {
+        nhiemvus {
+          id
+          project {
+            name
+          }
+          organize {
+            name
+          }
+          noidung
+          batdau
+          ketthuc
+          KhoiLuongHoanThanh
+          KhoiLuong
+          ghiChu
+          daHoanThanh
+        }
+      }
+    `
   },
-  created() {
-    this.$http
-      .get("/api/table/dispatched-orders")
-      .then(response => {
-        this.dispatchedOrders = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  computed: {
+    cacnhiemvu() {
+       let kq= []
+       this.nhiemvus.forEach(element => {
+          let doiTuong = {
+          id: element.id,
+          project: (element.project.name ? undefined : '', element.project.name),
+          organize: (element.organize.name ? undefined: '', element.organize.name),
+          noidung: element.noidung,
+          batdau: element.batdau,
+          ketthuc:element.ketthuc,
+          KhoiLuong: element.KhoiLuong,
+          KhoiLuongHoanThanh: element.KhoiLuongHoanThanh,
+          trangThai: this.loaiTrangThai(this.tinhTrangThai2(element.batdau,element.ketthuc,element.daHoanThanh)),
+          conLai: this.tinhHienTai(element.ketthuc),
+          ghiChu: element.ghiChu,
+          daHoanThanh: element.daHoanThanh
+         }
+         kq.push(doiTuong)
+       })
+      return kq
+    }
+  },
+  methods: {
+    mucDoHoanThanh(klht,kl){
+       return (klht * 100 /kl)
+     },
+     tinhThoiGian(ngayBatDau,ngayKetThuc){
+        let inbd = new Date(ngayBatDau)
+        let inkt = new Date(ngayKetThuc)
+        return Math.round((inkt-inbd) / 1000 / 60 / 60 / 24);
+     },
+     tinhHienTai(thoiGian){
+        let inbd= Date.now()
+        let inkt = new Date(thoiGian)
+        return Math.round((inkt-inbd) / 1000 / 60 / 60 / 24);
+     },
+     tinhTrangThai(ngayBatDau,ngayKetThuc,klht,kl)
+     {
+       if(klht<kl)
+       {
+         let Tongthoigian = this.tinhThoiGian(ngayBatDau,ngayKetThuc)
+         let hienTai = this.tinhHienTai(ngayKetThuc)
+         if(hienTai > 0){
+              let soThoiGianDaDung = hienTai/Tongthoigian
+              if(soThoiGianDaDung > 0.3) return 'primary'
+              else return 'warning'
+         }
+        else return 'danger'
+       }
+       else return 'success'
+     },
+     tinhTrangThai2(ngayBatDau,ngayKetThuc, dahoanthanh){
+        if(dahoanthanh===false || dahoanthanh===null){
+        let Tongthoigian = this.tinhThoiGian(ngayBatDau,ngayKetThuc)
+         let hienTai = this.tinhHienTai(ngayKetThuc)
+         if(hienTai > 0){
+              let soThoiGianDaDung = hienTai/Tongthoigian
+              if(soThoiGianDaDung > 0.3) return 'primary'
+              else return 'warning'
+         }
+        else return 'danger'
+        }
+        else return 'success'
+     },
+     loaiTrangThai(value){
+       if(value==='success') return '4. Hoàn thành'
+       if(value==='warning') return '2. Cảnh báo'
+       if(value==='primary') return '3. Đang thực hiện'
+       if(value==='danger') return '1. Quá hạn'
+     },
+     dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+},
+    dynamicSortMultiple() {
+    /*
+     * save the arguments object as it will be overwritten
+     * note that arguments object is an array-like object
+     * consisting of the names of the properties to sort by
+     */
+    var props = arguments;
+    return function (obj1, obj2) {
+        var i = 0, result = 0, numberOfProperties = props.length;
+        /* try getting a different result from 0 (equal)
+         * as long as we have extra properties to compare
+         */
+        while(result === 0 && i < numberOfProperties) {
+            result = this.dynamicSort(props[i])(obj1, obj2);
+            i++;
+        }
+        return result;
+    }
+},
+SapXepMang(){
+  return this.nhiemvus.sort(this.dynamicSortMultiple());
+}
   }
+  //   created() {
+  //     this.$http
+  //       .get("/api/table/dispatched-orders")
+  //       .then(response => {
+  //         this.dispatchedOrders = response.data;
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   }
 };
 </script>
+<style scoped>
+th {
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+}
+.product-order-status{
+  width: 115px;
+  font-weight: 700;
+}
+.date-status{
+    width: 70px;
+  font-weight: 700;
+}
+</style>

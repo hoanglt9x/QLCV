@@ -20,7 +20,12 @@
         <feather-icon class="sm:inline-flex xl:hidden cursor-pointer p-2" icon="MenuIcon" @click.stop="showSidebar" />
 
         <!-- <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992" /> -->
-
+        <div v-if="$store.state.hienThi">
+         <vs-chip color="danger" class="product-order-status">{{'Quá hạn: ' + $store.state.giaTri[0]}}</vs-chip>
+         <vs-chip color="warning" class="product-order-status">{{'Cảnh báo: ' + $store.state.giaTri[1]}}</vs-chip>
+         <vs-chip color="primary" class="product-order-status2">{{'Đang thực hiện: ' + $store.state.giaTri[2]}}</vs-chip>
+         <vs-chip color="success" class="product-order-status">{{'Hoàn thành: ' + $store.state.giaTri[3]}}</vs-chip>
+        </div>
         <vs-spacer />
 
         <!-- <search-bar />
@@ -48,6 +53,10 @@ export default {
       type: String,
       default: "#fff",
     },
+    giaTri: {
+      type: Array,
+      default: ()=>[0,0,0,0]
+    }
   },
   components: {
     // Bookmarks,
@@ -83,4 +92,16 @@ export default {
   }
 }
 </script>
+<style scoped>
+.product-order-status{
+  width: 150px;
+  font-weight: 700;
+  margin-right: 15px;
+}
+.product-order-status2{
+  width: 170px;
+  font-weight: 700;
+  margin-right: 15px;
+}
+</style>
 
