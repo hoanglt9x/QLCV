@@ -66,9 +66,6 @@ export default {
       }
     };
   },
-  mounted () {
-    this.$store.commit('UPDATE_HIEN_THI',false)
-  },
   apollo: {
     nhiemvus: gql`
       query NhiemVus {

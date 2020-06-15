@@ -10,15 +10,6 @@
 
 const mutations = {
 
-
-    // Value
-    UPDATE_THONG_KE(state, value) {
-        state.giaTri = value
-    },
-    //hien Thi
-    UPDATE_HIEN_THI(state, value) {
-        state.hienThi = value
-    },
     // /////////////////////////////////////////////
     // COMPONENTS
     // /////////////////////////////////////////////

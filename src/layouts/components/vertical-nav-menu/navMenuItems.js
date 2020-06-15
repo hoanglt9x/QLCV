@@ -28,7 +28,7 @@ export default [{
     },
     {
         url: "/vt",
-        name: "Nhiệm vụ văn thư",
+        name: "Nhiệm vụ văn phòng",
         slug: "nhiem-vu-van-thu",
         icon: "BriefcaseIcon",
     },

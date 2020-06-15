@@ -5,7 +5,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 // HTTP connection to the API
 const httpLink = createHttpLink({
     // You should use an absolute URL here
-    uri: process.env.VUE_APP_GRAPHQL_URL || "http://localhost:2626/graphql"
+    uri: process.env.VUE_APP_GRAPHQL_URL || "http://192.168.5.52:2626/graphql"
 });
 
 // Cache implementation
@@ -14,7 +14,7 @@ const cache = new InMemoryCache();
 // Create the apollo client
 const apolloClient = new ApolloClient({
     link: httpLink,
-    cache
+    cache: cache
 });
 
 export default apolloClient;

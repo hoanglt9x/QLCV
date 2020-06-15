@@ -42,6 +42,12 @@ const router = new Router({
                         import ("./views/nvkt.vue")
                 },
                 {
+                    path: "/nvkcs",
+                    name: "nvkcs",
+                    component: () =>
+                        import ("./views/nvkcs.vue")
+                },
+                {
                     path: "/nvct",
                     name: "nvct",
                     component: () =>

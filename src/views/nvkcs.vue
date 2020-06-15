@@ -30,7 +30,7 @@
           </vs-dropdown>
         </div> -->
         <div class="p-3  flex items-center justify-center text-lg font-medium w-200 titleTable">
-             NHIỆM VỤ KỸ THUẬT:
+             NHIỆM VỤ KẾ HOẠCH:
         </div>
          <div>
          <vs-chip color="danger" class="product-order-status">{{'Quá hạn: ' + thongKe[0]}}</vs-chip>
@@ -124,7 +124,7 @@ export default {
   apollo: {
     tasks: gql`
       query NhiemVuKT {
-        tasks(where:{tasktype: {loai: "Kỹ thuật"} hienThi: true}){
+        tasks(where:{tasktype: {loai: "KCS"} hienThi: true}){
           id
           soHopDong
           noiDung
@@ -146,7 +146,7 @@ export default {
 
       // AgGrid
       gridApi: null,
-      gridOptions: { localeText: {
+      gridOptions: {localeText: {
         selectAll: 'Chọn tất cả',
         selectAllSearchResults: 'Chọn tất cả kết quả tìm kiếm',
         searchOoo: 'Tìm kiếm...',
